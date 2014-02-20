@@ -1,13 +1,7 @@
 <?php
-/**
- * @package     Helloworld.site
- * @subpackage  com_categories
- *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
+
 // No direct access to this file
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 // Import Joomla controlleradmin library
 jimport('joomla.application.component.controlleradmin');
@@ -25,12 +19,12 @@ class HelloWorldControllerHelloWorlds extends JControllerAdmin
 	 * @param   string  $name    [description]
 	 * @param   string  $prefix  [description]
 	 *
-	 * @return  [type]           [description]
+	 * @return [type]         [description]
 	 */
-	public function getModel($name = 'HelloWorld', $prefix = 'HelloWorldModel')
-	{
-		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
+		public function getModel($name = 'HelloWorld', $prefix = 'HelloWorldModel')
+		{
+				$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 
-		return $model;
-	}
+				return $model;
+		}
 }

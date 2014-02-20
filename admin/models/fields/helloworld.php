@@ -1,11 +1,5 @@
 <?php
-/**
- * @package     Helloworld.site
- * @subpackage  com_categories
- *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
+
 // No direct access to this file
 defined('_JEXEC') or die;
 
@@ -14,7 +8,7 @@ jimport('joomla.form.helper');
 JFormHelper::loadFieldClass('list');
 
 /**
- * HelloWorlds Field
+ * HelloWorld Form Field class for the HelloWorld component
  *
  * @since  0.0.1
  */
@@ -22,8 +16,7 @@ class JFormFieldHelloWorld extends JFormFieldList
 {
 	/**
 	 * The field type.
-	 *
-	 * @var         string
+	 * @var string
 	 */
 	protected $type = 'HelloWorld';
 
@@ -34,20 +27,26 @@ class JFormFieldHelloWorld extends JFormFieldList
 	 */
 	protected function getOptions()
 	{
-		$db    = JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select('id,greeting');
-		$query->from('#__helloworld');
-		$db->setQuery((string) $query);
+		$query->select($db->quoteName(
+						array('id', 'parent_id',
+							'lft', 'rgt',
+							'title', 'alias',
+							'level')))
+			->From('#__helloworld_category');
+
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
 		$messages = $db->loadObjectList();
-		$options  = array();
+		$options = array();
 
 		if ($messages)
 		{
-			foreach ($messages as $message)
-			{
-				$options[] = JHtml::_('select.option', $message->id, $message->greeting);
-			}
+				foreach ($messages as $message)
+				{
+						$options[] = JHtml::_('select.option', $message->id, $message->parent_id, $message->lft, $message->rgt,  $message->title, $message->alias, $message->level);
+				}
 		}
 
 		$options = array_merge(parent::getOptions(), $options);

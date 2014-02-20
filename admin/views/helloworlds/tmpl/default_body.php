@@ -1,24 +1,58 @@
 <?php
-/**
- * @package     Helloworld.Administrator
- * @subpackage  com_categories
- *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
+
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
-?>
-<?php foreach ($this->items as $i => $item) ?>
-	<tr class="row<?php echo $i % 2; ?>">
-		<td>
-			<?php echo $item->id; ?>
-		</td>
+
+foreach ($this->items as $i => $item)
+{
+	if ($item->level >= 1)
+	{
+		$parentsStr = "";
+		$_currentParentId = $item->parent_id;
+		$parentsStr = " " . $_currentParentId;
+		$v = "";
+
+		for ($i2 = 0; $i2 < $item->level; $i2++)
+		{
+			$v .= "-";
+		}
+
+		$v = $v . " " . $item->title;
+		?>
+		<tr >
+			<td>
+				<?php echo JHtml::_('grid.id', $i, $item->id); ?>
+			</td>
+			<td>
+				<?php echo $item->level; ?>
+			</td>
+			<td>
+				<?php echo $v; ?>
+			</td>
+			<td>
+				<?php echo $item->alias; ?>
+			</td>
+		</tr>
+	<?php
+
+	}
+	else
+	{
+		?>
+	<tr >
 		<td>
 			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 		<td>
-			<?php echo $item->greeting; ?>
+			<?php echo $item->level; ?>
+		</td>
+		<td>
+			<?php echo $item->title; ?>
+		</td>
+		<td>
+			<?php echo $item->alias; ?>
 		</td>
 	</tr>
-<?php endforeach; ?>
+<?php
+	}
+}

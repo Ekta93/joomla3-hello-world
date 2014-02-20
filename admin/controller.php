@@ -1,39 +1,61 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_admin
+ * @package     HelloWorld.Administrator
+ * @subpackage  com_helloworld
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+// No direct access to this file
 defined('_JEXEC') or die;
 
-// Import Joomla controller library
-jimport('joomla.application.component.controller');
-
 /**
- * HelloWorld Controller
+ * General Controller of HelloWorld component
  *
  * @since  0.0.1
  */
 class HelloWorldController extends JControllerLegacy
 {
 	/**
-	 * display task
+	 * The default view for the display method.
 	 *
-	 * @param   boolean  $cachable   [description]
-	 * @param   boolean  $urlparams  [description]
-	 *
-	 * @return  [type]               [description]
+	 * @var string
+	 * @since 12.2
 	 */
-	function display($cachable = false, $urlparams = false)
-	{
-		// Set default view if not set
-		$input = JFactory::getApplication()->input;
-		$input->set('view', $input->getCmd('view', 'HelloWorlds'));
+	protected $default_view = 'categories';
 
-		// Call parent behavior
-		parent::display($cachable);
+	/**
+	 * Method to display a view.
+	 *
+	 * @param   boolean  $cachable   If true, the view output will be cached
+	 * @param   array    $urlparams  An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+	 *
+	 * @return  JController  This object to support chaining.
+	 *
+	 * @since   1.5
+	 */
+	public function display($cachable = false, $urlparams = false)
+	{
+		$view   = $this->input->get('view', 'categories');
+		$layout = $this->input->get('layout', 'default');
+		$id     = $this->input->getInt('id');
+
+		// Check for edit form.
+		if ($view == 'category' && $layout == 'edit' && !$this->checkEditId('com_helloworld.edit.category', $id))
+		{
+			// Somehow the person just went to the form - we don't allow that.
+			$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setMessage($this->getError(), 'error');
+			$this->setRedirect(JRoute::_('index.php?option=com_helloworld&view=categories', false));
+
+			return false;
+
+
+		}
+
+		parent::display();
+
+		return $this;
 	}
 }

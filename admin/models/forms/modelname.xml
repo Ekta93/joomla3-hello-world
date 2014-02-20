@@ -1,0 +1,9 @@
+<fieldset>
+<field
+   name="image"
+   default=""
+   type="userfield"
+   label="COM_COMPONENTNAME_MODEL_FIELD_IMAGE_LABEL"
+   description="COM_COMPONENTNAME_MODEL_FIELD_IMAGE_DESC"
+   componentname="com_helloworld" />
+</fieldset>

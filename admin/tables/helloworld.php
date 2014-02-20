@@ -1,31 +1,28 @@
 <?php
 /**
- * @package     Helloworld.site
- * @subpackage  com_categories
+ * @package     HelloWorld.Administrator
+ * @subpackage  com_helloworld
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 // No direct access
-defined('_JEXEC') or die('Restricted access');
-
-// Import Joomla table library
-jimport('joomla.database.table');
+defined('_JEXEC') or die;
 
 /**
- * HelloWorld Table
+ * Hello Table class
  *
- * @since  0.0.1.
+ * @since  0.0.1
  */
-class HelloWorldTableHelloWorld extends JTable
+class HelloWorldTableHelloWorld extends JTableNested
 {
 	/**
 	 * Constructor
 	 *
-	 * @param   [type]  &$db  [description]
+	 * @param   JDatabaseDriver  &$db  A database connector object
 	 */
 	function __construct(&$db)
 	{
-		parent::__construct('#__helloworld', 'id', $db);
+		parent::__construct('#__helloworld_category', 'id', $db);
 	}
 }
